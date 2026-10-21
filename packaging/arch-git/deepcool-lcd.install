@@ -1,0 +1,31 @@
+_apply_device_rules() {
+    # pacman's sysusers and udev hooks run after this script
+    systemd-sysusers /usr/lib/sysusers.d/deepcool-lcd.conf 2>/dev/null || true
+    udevadm control --reload 2>/dev/null || true
+    udevadm trigger --subsystem-match=usb --attr-match=idVendor=3633 --action=add 2>/dev/null || true
+    udevadm trigger --subsystem-match=powercap --action=add 2>/dev/null || true
+}
+
+post_install() {
+    _apply_device_rules
+    if systemctl is-enabled --quiet deepcool-lm 2>/dev/null || systemctl is-active --quiet deepcool-lm 2>/dev/null; then
+        systemctl disable --now deepcool-lm 2>/dev/null || true
+    fi
+    echo
+    echo "==> Start DeepCool LCD with:"
+    echo "      sudo systemctl enable --now deepcool-lcd"
+    echo "==> Then open 'DeepCool LCD Studio' from your app menu (needs python-gobject and gtk4)."
+    echo
+}
+
+post_upgrade() {
+    _apply_device_rules
+    systemctl daemon-reload
+    if systemctl is-active --quiet deepcool-lcd; then
+        systemctl restart deepcool-lcd
+    fi
+}
+
+pre_remove() {
+    systemctl disable --now deepcool-lcd 2>/dev/null || true
+}

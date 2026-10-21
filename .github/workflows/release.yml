@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  deb:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: packaging/debian/build-deb.sh dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deb
+          path: dist/*.deb
+
+  rpm:
+    runs-on: ubuntu-24.04
+    container: fedora:latest
+    steps:
+      - run: dnf install -y rpm-build make systemd-rpm-macros git tar
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          mkdir -p ~/rpmbuild/SOURCES
+          git config --global --add safe.directory "$PWD"
+          git archive --format=tar.gz --prefix="deepcool-lcd-$version/" -o ~/rpmbuild/SOURCES/deepcool-lcd-$version.tar.gz HEAD
+          rpmbuild -bb packaging/rpm/deepcool-lcd.spec
+          mkdir -p dist && cp ~/rpmbuild/RPMS/noarch/*.rpm dist/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rpm
+          path: dist/*.rpm
+
+  release:
+    needs: [deb, rpm]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Source tarball
+        run: git archive --format=tar.gz --prefix="deepcool-lcd-${GITHUB_REF_NAME#v}/" -o "dist/deepcool-lcd-${GITHUB_REF_NAME#v}.tar.gz" HEAD
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

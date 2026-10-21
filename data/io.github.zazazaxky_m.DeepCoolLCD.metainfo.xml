@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.zazazaxky_m.DeepCoolLCD</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>DeepCool LCD Studio</name>
+  <summary>Custom screens for DeepCool LM-series AIO cooler LCDs</summary>
+  <developer id="io.github.zazazaxky_m">
+    <name>zazazaxky-m</name>
+  </developer>
+  <description>
+    <p>
+      Shows live CPU and GPU temperatures, load, clocks, power and memory on the LCD of
+      DeepCool LM-series AIO coolers, with 15 layouts, your own colors, adjustable brightness
+      and refresh rate, pictures and solid colors.
+    </p>
+    <p>Not affiliated with DeepCool.</p>
+  </description>
+  <launchable type="desktop-id">io.github.zazazaxky_m.DeepCoolLCD.desktop</launchable>
+  <url type="homepage">https://github.com/zazazaxky-m/deepcool-lcd</url>
+  <url type="bugtracker">https://github.com/zazazaxky-m/deepcool-lcd/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Layouts and live preview</caption>
+      <image>https://raw.githubusercontent.com/zazazaxky-m/deepcool-lcd/main/docs/screenshots/studio.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="1.0.0" date="2026-10-21">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

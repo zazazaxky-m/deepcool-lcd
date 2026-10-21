@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=DeepCool LCD Studio
+GenericName=Cooler LCD Customizer
+Comment=Customize the LCD of DeepCool LM-series AIO coolers
+Exec=deepcool-lcd-studio
+Icon=io.github.zazazaxky_m.DeepCoolLCD
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=deepcool;lcd;aio;cooler;lm360;temperature;monitor;
+StartupNotify=true

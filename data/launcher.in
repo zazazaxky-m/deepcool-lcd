@@ -1,0 +1,7 @@
+#!@PYTHON@
+import sys
+
+sys.path.insert(0, '@LIBDIR@')
+from deepcool_lcd.@MODULE@ import main  # noqa: E402
+
+sys.exit(main())

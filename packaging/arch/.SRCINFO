@@ -1,0 +1,23 @@
+pkgbase = deepcool-lcd
+	pkgdesc = Custom screens and a GTK customizer for DeepCool LM-series AIO cooler LCDs
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/zazazaxky-m/deepcool-lcd
+	install = deepcool-lcd.install
+	arch = any
+	license = MIT
+	license = OFL-1.1
+	license = Bitstream-Vera
+	depends = python
+	depends = python-pyusb
+	depends = python-psutil
+	depends = python-pillow
+	depends = systemd
+	optdepends = python-gobject: DeepCool LCD Studio app
+	optdepends = gtk4: DeepCool LCD Studio app
+	optdepends = nvidia-utils: NVIDIA GPU stats
+	conflicts = deepcool-lm
+	source = deepcool-lcd-1.0.0.tar.gz::https://github.com/zazazaxky-m/deepcool-lcd/archive/refs/tags/v1.0.0.tar.gz
+	sha256sums = SKIP
+
+pkgname = deepcool-lcd

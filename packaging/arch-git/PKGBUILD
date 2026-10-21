@@ -1,0 +1,36 @@
+# Maintainer: zazazaxky-m
+pkgname=deepcool-lcd-git
+pkgver=1.0.0.r0.g0000000
+pkgrel=1
+pkgdesc="Custom screens and a GTK customizer for DeepCool LM-series AIO cooler LCDs (development version)"
+arch=('any')
+url="https://github.com/zazazaxky-m/deepcool-lcd"
+license=('MIT' 'OFL-1.1' 'Bitstream-Vera')
+depends=('python' 'python-pyusb' 'python-psutil' 'python-pillow' 'systemd')
+optdepends=('python-gobject: DeepCool LCD Studio app'
+            'gtk4: DeepCool LCD Studio app'
+            'nvidia-utils: NVIDIA GPU stats')
+makedepends=('git')
+provides=('deepcool-lcd')
+conflicts=('deepcool-lcd' 'deepcool-lm')
+install=deepcool-lcd.install
+source=("$pkgname::git+$url.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$pkgname"
+    git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+check() {
+    cd "$pkgname"
+    python -m unittest discover -s tests -t .
+}
+
+package() {
+    cd "$pkgname"
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 data/fonts/OFL-FiraSans.txt "$pkgdir/usr/share/licenses/$pkgname/OFL-FiraSans.txt"
+    install -Dm644 data/fonts/LICENSE-Hack.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE-Hack.md"
+}

@@ -1,0 +1,5 @@
+# DeepCool LM-series LCD
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="3633", ATTR{idProduct}=="0026", GROUP="deepcool-lcd", MODE="0664"
+
+# RAPL energy counter, root-only by default (CVE-2020-8694)
+SUBSYSTEM=="powercap", KERNEL=="intel-rapl:0", RUN+="/bin/sh -c 'chgrp deepcool-lcd /sys%p/energy_uj && chmod 0440 /sys%p/energy_uj'"

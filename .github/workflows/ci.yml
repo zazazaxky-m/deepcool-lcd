@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        python: ['3.9', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: pip install pyusb psutil 'pillow>=9.1'
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t . -v
+      - name: Byte-compile everything (including the GTK app)
+        run: python -m compileall -q deepcool_lcd tools tests
+
+  package-checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y desktop-file-utils appstream shellcheck
+      - name: Desktop entry and AppStream metadata
+        run: |
+          desktop-file-validate data/io.github.zazazaxky_m.DeepCoolLCD.desktop
+          appstreamcli validate --no-net data/io.github.zazazaxky_m.DeepCoolLCD.metainfo.xml
+      - name: Shell scripts
+        run: shellcheck install.sh packaging/debian/build-deb.sh
+      - name: make install into a staging directory
+        run: |
+          make install DESTDIR="$PWD/stage" PREFIX=/usr
+          find stage -type f | sort
+          test -x stage/usr/bin/deepcool-lcd
+          test -f stage/usr/lib/systemd/system/deepcool-lcd.service
+          test -f stage/usr/lib/udev/rules.d/60-deepcool-lcd.rules
+          test -f stage/usr/lib/sysusers.d/deepcool-lcd.conf
+      - name: Build the .deb
+        run: packaging/debian/build-deb.sh dist && dpkg-deb --info dist/*.deb && dpkg-deb --contents dist/*.deb
