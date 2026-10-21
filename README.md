@@ -5,7 +5,6 @@ temperatures, load, clocks, power and memory, in 15 layouts you can color to mat
 plus a desktop app to customize everything.
 
 [![CI](https://github.com/zazazaxky-m/deepcool-lcd/actions/workflows/ci.yml/badge.svg)](https://github.com/zazazaxky-m/deepcool-lcd/actions/workflows/ci.yml)
-[![AUR](https://img.shields.io/aur/version/deepcool-lcd)](https://aur.archlinux.org/packages/deepcool-lcd)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ![The 15 layouts](docs/screenshots/gallery.png)
@@ -44,17 +43,23 @@ Check that your cooler is there with `lsusb | grep 3633`.
 
 ## Install
 
-### Arch Linux, Manjaro, EndeavourOS, CachyOS (AUR)
+### Arch Linux, Manjaro, EndeavourOS, CachyOS
+
+Build the package from the PKGBUILD in this repo (the AUR package is coming soon):
 
 ```bash
-yay -S deepcool-lcd
+git clone https://github.com/zazazaxky-m/deepcool-lcd
+```
+
+```bash
+cd deepcool-lcd/packaging/arch && makepkg -si
 ```
 
 ```bash
 sudo systemctl enable --now deepcool-lcd
 ```
 
-`paru -S deepcool-lcd` works too, and `deepcool-lcd-git` tracks the latest code.
+`packaging/arch-git` builds the latest code instead.
 
 ### Ubuntu, Debian, Linux Mint, Pop!_OS
 

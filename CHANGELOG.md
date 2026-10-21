@@ -19,5 +19,5 @@ driver by dlock and adds:
   by the client, never by the service.
 - **Lighter**: about half the CPU time per frame of the first versions (no `nvidia-smi` process per
   frame, one sysfs read for the CPU temperature).
-- Packages for Arch (AUR), Debian/Ubuntu (.deb) and Fedora/openSUSE (.rpm), and an installer for
+- Packages for Arch (PKGBUILD), Debian/Ubuntu (.deb) and Fedora/openSUSE (.rpm), and an installer for
   other systemd distros.
