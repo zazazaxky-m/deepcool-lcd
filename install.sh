@@ -31,7 +31,7 @@ install_dependencies() {
 
 find_source() {
     local here
-    here="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
+    here="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd)" || here=""
     if [ -n "$here" ] && [ -f "$here/Makefile" ] && [ -d "$here/deepcool_lcd" ]; then
         SRC="$here"
         return
