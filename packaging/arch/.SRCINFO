@@ -18,6 +18,6 @@ pkgbase = deepcool-lcd
 	optdepends = nvidia-utils: NVIDIA GPU stats
 	conflicts = deepcool-lm
 	source = deepcool-lcd-1.0.0.tar.gz::https://github.com/zazazaxky-m/deepcool-lcd/archive/refs/tags/v1.0.0.tar.gz
-	sha256sums = SKIP
+	sha256sums = bcad181774f3c982141161a11defdac95214555ae8839fbb788853456e5812ea
 
 pkgname = deepcool-lcd
